@@ -44,7 +44,7 @@
 
 #include "./util/argparse.h"
 
-#define TIMES 100
+#define TIMES 1000
 
 using namespace std;
 

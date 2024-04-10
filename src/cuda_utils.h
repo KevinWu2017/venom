@@ -18,6 +18,8 @@
 #ifndef SPMM_CNN_CUDA_UTILS_H_
 #define SPMM_CNN_CUDA_UTILS_H_
 
+#define WARMUP 10
+
 #define CHECK_CUDA(func)                                                       \
 {                                                                              \
     cudaError_t status = (func);                                               \
@@ -61,19 +63,22 @@ template<typename F, class... Args>
 float cuTime(int times, F&& f, Args&&... args){
   float time_ms;
   cudaEvent_t start, stop;
-  int warmup = (times>0)?(10):(0);
+  int warmup = (times>0)?(WARMUP):(0);
 
   cudaDeviceSynchronize();
 
   cudaEventCreate(&start);
   cudaEventCreate(&stop);
 
-  for(int i=0; i<warmup + times; ++i){
-    if (i == warmup)
-        cudaEventRecord(start, 0);
+    for (int i = 0; i < warmup; ++i) {
+        f(forward<Args>(args)...);
+    }
 
-    f(forward<Args>(args)...);
-  }
+    cudaEventRecord(start, 0);
+
+    for (int i = 0; i < times; ++i) {
+        f(forward<Args>(args)...);
+    }
 
   cudaEventRecord(stop, 0);
   cudaEventSynchronize(stop);
