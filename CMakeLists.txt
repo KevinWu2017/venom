@@ -19,8 +19,8 @@ create_cuda_gencode_flags(CUDA_GENCODE_FLAGS ${CUDA_ARCHS})
 set(CMAKE_CUDA_FLAGS "${CMAKE_CUDA_FLAGS} ${CUDA_GENCODE_FLAGS}")
 add_definitions(-DGPU_CC=${CUDA_ARCHS})
 
-set(CUSPARSELT_PATH "/projects/libcusparse_lt-linux-x86_64-0.3.0.3-archive/")
-set(CUDA_TOOLKIT_PATH "/usr/local/cuda-11.5/")
+set(CUSPARSELT_PATH "../../../../cusparselt/libcusparse_lt-linux-x86_64-0.4.0.7-archive/")
+set(CUDA_TOOLKIT_PATH "/usr/local/cuda/")
 
 if(BASELINE)
    add_definitions(-DBASELINE)

@@ -143,9 +143,9 @@ Spmm_CNN<T,T2>* create_spmm(int spmm_code, Dataset<T,T2> &d, cudaDataType_t S, c
     case 2:
         spmm = new Spatha<T,T2>(d, S, C_spmm);
         break;
-    case 3:
-        spmm = new CusparseLt_Spmm<T,T2>(d, S, C_spmm);
-        break;
+    // case 3:
+    //     spmm = new CusparseLt_Spmm<T,T2>(d, S, C_spmm);
+    //     break;
 
     default:
         break;
@@ -178,7 +178,7 @@ void launch_kernels(int pattern_code, int gemm_code, int spmm_code, int check, i
     if(check)
         error = check_results(gemm->get_C(), spmm->get_result(), *dt, 1);
 
-    cout << spmm_code << "," << "sm_86" << "," << m << "," << k << "," << n << "," << meta_block_sz << "," << block_sz << "," << nn_row << "," << mm_row << "," << density << "," << bm << "," << bn << "," << bk << "," << wm << "," << wn << "," << wk << "," << mm << "," << mn << "," << mk << "," << nstage << "," << spmm_time << "," << gemm_time << "," << gemm_time/spmm_time << "," << error << endl;
+    cout << spmm_code << "," << "sm_89" << "," << m << "," << k << "," << n << "," << meta_block_sz << "," << block_sz << "," << nn_row << "," << mm_row << "," << density << "," << bm << "," << bn << "," << bk << "," << wm << "," << wn << "," << wk << "," << mm << "," << mn << "," << mk << "," << nstage << "," << spmm_time << "," << gemm_time << "," << gemm_time/spmm_time << "," << error << endl;
 
     delete gemm;
     delete spmm;

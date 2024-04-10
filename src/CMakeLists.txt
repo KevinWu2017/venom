@@ -44,7 +44,7 @@ endif ()
 message(STATUS "Using CUSPARSELT_PATH = ${CUSPARSELT_DIR}")
 
 set_with_fallback(CUDA_TOOLKIT_PATH CUDA_TOOLKIT_DIR)
-if (CUSPARSELT_PATH STREQUAL "")
+if (CUDA_TOOLKIT_PATH STREQUAL "")
 	message(FATAL_ERROR "Please set the environment variables CUDA_TOOLKIT_DIR to the path of the toolkit installation.")
 endif ()
 

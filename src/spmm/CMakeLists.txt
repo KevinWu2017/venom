@@ -7,8 +7,8 @@ set(SPMM_SOURCES
 	clasp_spmm.cpp
 	spatha_spmm.hpp
 	spatha_spmm.cpp
-	cusparseLt_spmm.hpp
-  cusparseLt_spmm.cpp
+#	cusparseLt_spmm.hpp
+#  cusparseLt_spmm.cpp
 )
 
 set_source_files_properties(${SPMM_SOURCES} PROPERTIES LANGUAGE CUDA)
@@ -34,12 +34,12 @@ target_link_libraries(spmm
 
 
 target_link_directories(spmm
-    PUBLIC ${CUSPARSELT_PATH}/lib
+#    PUBLIC ${CUSPARSELT_PATH}/lib
     PUBLIC ${CUDA_TOOLKIT_PATH}/lib64
 )
 
 target_link_libraries(spmm
 	#PUBLIC cudart
     PUBLIC cusparse
-    PUBLIC libcusparseLt.so
+#    PUBLIC libcusparseLt.so
 )
