@@ -196,14 +196,15 @@ CusparseLt_Spmm<T,T2>::CusparseLt_Spmm(Dataset<T,T2> &d, cudaDataType_t S, cuspa
     CHECK_CUSPARSELT( cusparseLtMatmulAlgSelectionInit(
                                             &handle, &alg_sel, &matmul,
                                             CUSPARSELT_MATMUL_ALG_DEFAULT) )
-    int alg = 0;
-    CHECK_CUSPARSELT( cusparseLtMatmulAlgSetAttribute(
-                                            &handle, &alg_sel,
-                                            CUSPARSELT_MATMUL_ALG_CONFIG_ID,
-                                            &alg, sizeof(alg)))
-    size_t workspace_size, compressed_size;
-    CHECK_CUSPARSELT( cusparseLtMatmulPlanInit(&handle, &plan, &matmul, &alg_sel, workspace_size) )
-
+//    int alg = 0;
+//    CHECK_CUSPARSELT( cusparseLtMatmulAlgSetAttribute(
+//                                            &handle, &alg_sel,
+//                                            CUSPARSELT_MATMUL_ALG_CONFIG_ID,
+//                                            &alg, sizeof(alg)))
+//    size_t workspace_size, compressed_size;
+//    CHECK_CUSPARSELT( cusparseLtMatmulPlanInit(&handle, &plan, &matmul, &alg_sel, workspace_size) )
+    CHECK_CUSPARSELT( cusparseLtMatmulPlanInit(&handle, &plan, &matmul, &alg_sel) )
+    size_t workspace_size;
     CHECK_CUSPARSELT( cusparseLtMatmulGetWorkspace(&handle, &plan,
                                                  &workspace_size))
 
@@ -224,13 +225,17 @@ CusparseLt_Spmm<T,T2>::CusparseLt_Spmm(Dataset<T,T2> &d, cudaDataType_t S, cuspa
     }
     //--------------------------------------------------------------------------
     // Compress the A matrix
+    size_t compressed_size, compressed_buffer_size;
+    void*  dA_compressedBuffer;
     CHECK_CUSPARSELT( cusparseLtSpMMACompressedSize(&handle, &plan,
-                                                  &compressed_size) )
+                                                    &compressed_size,
+                                                    &compressed_buffer_size) )
     //std::cout << compressed_size << std::endl;
     CUDA_CHECK( cudaMalloc((void**) &dA_compressed, compressed_size) )
+    CUDA_CHECK( cudaMalloc((void**) &dA_compressedBuffer, compressed_buffer_size) )
 
-    CHECK_CUSPARSELT( cusparseLtSpMMACompress(&handle, &plan, dA,
-                                            dA_compressed, stream) )
+    CHECK_CUSPARSELT( cusparseLtSpMMACompress(&handle, &plan, dA, dA_compressed,
+                                            dA_compressedBuffer,stream) )
 
     cudaFree(d_valid);
     //CHECK_CUSPARSELT( cusparseLtMatulDescriptorDestroy(matmul) )

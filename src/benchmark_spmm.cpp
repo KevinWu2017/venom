@@ -143,9 +143,9 @@ Spmm_CNN<T,T2>* create_spmm(int spmm_code, Dataset<T,T2> &d, cudaDataType_t S, c
     case 2:
         spmm = new Spatha<T,T2>(d, S, C_spmm);
         break;
-    // case 3:
-    //     spmm = new CusparseLt_Spmm<T,T2>(d, S, C_spmm);
-    //     break;
+     case 3:
+         spmm = new CusparseLt_Spmm<T,T2>(d, S, C_spmm);
+         break;
 
     default:
         break;

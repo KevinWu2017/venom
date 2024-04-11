@@ -7,8 +7,8 @@ set(SPMM_SOURCES
 	clasp_spmm.cpp
 	spatha_spmm.hpp
 	spatha_spmm.cpp
-#	cusparseLt_spmm.hpp
-#  cusparseLt_spmm.cpp
+	cusparseLt_spmm.hpp
+	cusparseLt_spmm.cpp
 )
 
 set_source_files_properties(${SPMM_SOURCES} PROPERTIES LANGUAGE CUDA)
