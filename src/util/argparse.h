@@ -133,6 +133,8 @@ void parseArgs(const int argc, const char** argv, int &m, int &n, int &k, float 
                 spmm_code = 2;
             } else if (!strcmp(argv[i+1], "cuSparseLt")){
                 spmm_code = 3;
+            } else if(!strcmp(argv[i+1], "cuSparseLt_searched")){
+                spmm_code = 4;
             }
         }
         else if (!strcmp(argv[i], "--gemm") && i!=argc-1) {

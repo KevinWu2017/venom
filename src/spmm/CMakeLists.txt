@@ -9,6 +9,8 @@ set(SPMM_SOURCES
 	spatha_spmm.cpp
 	cusparseLt_spmm.hpp
 	cusparseLt_spmm.cpp
+	cusparseLt_searched_spmm.hpp
+	cusparseLt_searched_spmm.cpp
 )
 
 set_source_files_properties(${SPMM_SOURCES} PROPERTIES LANGUAGE CUDA)

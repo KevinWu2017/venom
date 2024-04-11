@@ -38,6 +38,7 @@
 #include "./spmm/clasp_spmm.hpp"
 #include "./spmm/spatha_spmm.hpp"
 #include "./spmm/cusparseLt_spmm.hpp"
+#include "./spmm/cusparseLt_searched_spmm.hpp"
 
 #include "./gemm/cublas_gemm.hpp"
 #include "./gemm/cublasLt_gemm.hpp"
@@ -143,9 +144,12 @@ Spmm_CNN<T,T2>* create_spmm(int spmm_code, Dataset<T,T2> &d, cudaDataType_t S, c
     case 2:
         spmm = new Spatha<T,T2>(d, S, C_spmm);
         break;
-     case 3:
-         spmm = new CusparseLt_Spmm<T,T2>(d, S, C_spmm);
-         break;
+    case 3:
+        spmm = new CusparseLt_Spmm<T,T2>(d, S, C_spmm);
+        break;
+    case 4:
+        spmm = new CusparseLt_searched_Spmm<T,T2>(d, S, C_spmm);
+        break;
 
     default:
         break;
