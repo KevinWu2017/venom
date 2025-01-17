@@ -12,7 +12,7 @@ setup(
     ext_modules=[
             CUDAExtension('spatha',
                               ['spatha_mod/block_sparse/api/spatha.cu'],
-                              extra_compile_args={'cxx':[], 'nvcc':['-arch=sm_86', '--ptxas-options=-v', '-lineinfo', '-DV_64']})
+                              extra_compile_args={'cxx':[], 'nvcc':['-arch=sm_89', '--ptxas-options=-v', '-lineinfo', '-DV_64']})
                   ],
     cmdclass={'build_ext': BuildExtension},
     install_requires=['torch']
